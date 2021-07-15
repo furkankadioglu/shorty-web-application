@@ -5,6 +5,7 @@ from shorty.Providers.TinyUrlProvider import TinyUrlProvider
 from shorty.Engines.BaseEngine import BaseEngine
 from shorty.Helpers.Generic import searchInObjectArray
 
+from flask import jsonify
 import requests
 import random
 
@@ -43,6 +44,25 @@ class ShortLinkEngine(BaseEngine):
     def setProviderName(self, providerName):
         self.providerName = providerName
         self.resolveProvider(providerName)
+
+    def shortLink(self, url = None, providerName = None):
+
+        if url != None:
+            self.setLink(url)
+        
+        self.setProviderName(providerName)
+
+        response = self.shortUrlRequest(url)
+
+        if(response.success == True):
+            return jsonify({"url": url, "link": response.data}), 200
+        else:
+            return jsonify({}), response.code
+
+    def shortUrlRequest(self, url):
+        requestData = self.provider.prepareRequest(url)
+        response = requests.request(self.provider.method, url=self.provider.getRequestUrl(), headers=requestData["headers"], json=requestData["json"], params=requestData["params"], timeout=20)
+        return self.provider.handleResponse(response)
 
     def resolveProvider(self, providerName = None) -> BaseProvider:
         provider = searchInObjectArray(self.availableProviders, lambda x: x.name == providerName)
