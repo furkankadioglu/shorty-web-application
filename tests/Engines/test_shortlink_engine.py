@@ -36,3 +36,8 @@ class TestShortlinkEngine:
 
     def test_resolve_provider_set_tinyurl_provider(self):
         assert type(TinyUrlProvider()) is type(self.engine.resolveProvider("TinyUrl"))
+
+    def test_short_link_with_default(self):
+        self.engine.shortLink("https://google.com")
+
+        assert self.engine.url == "https://google.com"
