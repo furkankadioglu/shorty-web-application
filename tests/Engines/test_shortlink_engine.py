@@ -1,4 +1,3 @@
-from shorty.Providers.BitlyProvider import BitlyProvider
 from shorty.Engines.ShortLinkEngine import ShortLinkEngine
 from shorty.Providers.BitlyProvider import BitlyProvider
 
