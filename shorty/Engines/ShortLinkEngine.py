@@ -9,6 +9,8 @@ class ShortLinkEngine(BaseEngine):
 
     name = "Shortlink Engine"
 
+    DEFAULT_PROVIDER = BitlyProvider()
+
     url = None
 
     availableProviders = []
@@ -25,3 +27,9 @@ class ShortLinkEngine(BaseEngine):
 
         self.availableProviders = [
         ]
+
+    def setLink(self,URL):
+        self.url = URL
+
+    def setProviderName(self, providerName):
+        self.providerName = providerName
