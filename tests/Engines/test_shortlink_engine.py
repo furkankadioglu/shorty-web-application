@@ -23,7 +23,6 @@ class TestShortlinkEngine:
     def test_set_provider_name(self):
         self.engine.setProviderName("Bitly")
         assert self.engine.providerName == "Bitly"
-        assert type(BitlyProvider()) is type(self.engine.provider)
 
     def test_resolve_provider(self):
         assert type(BitlyProvider()) is type(self.engine.resolveProvider("Bitly"))
@@ -41,3 +40,16 @@ class TestShortlinkEngine:
         self.engine.shortLink("https://google.com")
 
         assert self.engine.url == "https://google.com"
+        assert self.engine.provider == self.engine.DEFAULT_PROVIDER
+
+    def test_short_link_with_bitly(self):
+        self.engine.shortLink("https://google.com", "Bitly")
+
+        assert self.engine.url == "https://google.com"
+        assert type(self.engine.provider) == type(BitlyProvider())
+
+    def test_short_link_with_bitly(self):
+        self.engine.shortLink("https://google.com", "TinyUrl")
+
+        assert self.engine.url == "https://google.com"
+        assert type(self.engine.provider) == type(TinyUrlProvider())
