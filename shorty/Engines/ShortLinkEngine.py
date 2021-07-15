@@ -42,7 +42,7 @@ class ShortLinkEngine(BaseEngine):
 
     def setProviderName(self, providerName):
         self.providerName = providerName
-
+        self.resolveProvider(providerName)
 
     def resolveProvider(self, providerName = None) -> BaseProvider:
         provider = searchInObjectArray(self.availableProviders, lambda x: x.name == providerName)

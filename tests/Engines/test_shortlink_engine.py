@@ -23,6 +23,7 @@ class TestShortlinkEngine:
     def test_set_provider_name(self):
         self.engine.setProviderName("Bitly")
         assert self.engine.providerName == "Bitly"
+        assert type(BitlyProvider()) is type(self.engine.provider)
 
     def test_resolve_provider(self):
         assert type(BitlyProvider()) is type(self.engine.resolveProvider("Bitly"))
