@@ -1,5 +1,4 @@
 from shorty.Providers.TinyUrlProvider import TinyUrlProvider
-import os
 class TestTinyurlProvider:
     
     provider = TinyUrlProvider()
