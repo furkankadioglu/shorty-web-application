@@ -1,5 +1,7 @@
+from shorty.Providers.TinyUrlProvider import TinyUrlProvider
 from shorty.Providers.BitlyProvider import BitlyProvider
 from shorty.Engines.ShortLinkEngine import ShortLinkEngine
+from shorty.Helpers.Generic import searchInObjectArray
 
 class TestShortlinkEngine:
     engine = ShortLinkEngine()
@@ -8,7 +10,7 @@ class TestShortlinkEngine:
         assert self.engine.name == "Shortlink Engine"
         assert type(self.engine.DEFAULT_PROVIDER) == type(BitlyProvider())
         assert self.engine.url == None
-        assert self.engine.availableProviders == []
+        assert self.engine.availableProviders == [type(BitlyProvider()), type(TinyUrlProvider())]
         assert self.engine.providerName == None
         assert self.engine.provider == None 
         assert self.engine.fallbackProvider == None
@@ -18,6 +20,18 @@ class TestShortlinkEngine:
         self.engine.setLink("https://test.com")
         assert self.engine.url == "https://test.com"
 
-    def test_set_providerName(self):
+    def test_set_provider_name(self):
         self.engine.setProviderName("Bitly")
         assert self.engine.providerName == "Bitly"
+
+    def test_resolve_provider(self):
+        assert type(BitlyProvider()) is type(self.engine.resolveProvider("Bitly"))
+
+    def test_resolve_priver_use_fallback_provider(self):
+        assert type(self.engine.DEFAULT_PROVIDER) is type(self.engine.resolveProvider("Bitly"))
+
+    def test_resolve_priver_use_fallback_provider_with_incorrect_provider_name(self):
+        assert type(self.engine.DEFAULT_PROVIDER) is type(self.engine.resolveProvider("INCORRECT PROVIDER NAME"))
+
+    def test_resolve_provider_set_tinyurl_provider(self):
+        assert type(TinyUrlProvider()) is type(self.engine.resolveProvider("TinyUrl"))
