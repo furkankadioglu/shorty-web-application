@@ -1,7 +1,6 @@
 from shorty.Providers.TinyUrlProvider import TinyUrlProvider
 from shorty.Providers.BitlyProvider import BitlyProvider
 from shorty.Engines.ShortLinkEngine import ShortLinkEngine
-from shorty.Helpers.Generic import searchInObjectArray
 
 class TestShortlinkEngine:
     engine = ShortLinkEngine()
